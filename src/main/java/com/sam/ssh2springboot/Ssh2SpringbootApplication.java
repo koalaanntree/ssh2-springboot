@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.BufferedReader;
@@ -31,6 +32,7 @@ public class Ssh2SpringbootApplication {
     Connection connection;
 
     @PostMapping
+    @ResponseBody
     public List<TopResult> ssh(@RequestParam("query") String cmd) throws Exception {
         //声明session
         Session session = null;
