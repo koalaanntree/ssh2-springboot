@@ -84,32 +84,4 @@ public class Ssh2SpringbootApplication {
         }
         return sb.toString();
     }
-
-    /**
-     * 封装top命令返回的数据
-     * @param originalData
-     * @return
-     */
-    private List<Map<String, String>> getTopResult(String originalData) {
-        String[] lineData = originalData.split("\n");
-        List<Map<String, String>> list = new ArrayList<>();
-        for (int i = 0; i < lineData.length; i++) {
-            Map<String, String> map = new HashMap<>();
-            String[] unitData = lineData[i].trim().split("\\s{1,}");
-            map.put("PID", unitData[0]);
-            map.put("USER", unitData[1]);
-            map.put("PR", unitData[2]);
-            map.put("NI", unitData[3]);
-            map.put("VIRT", unitData[4]);
-            map.put("RES", unitData[5]);
-            map.put("SHR", unitData[6]);
-            map.put("S", unitData[7]);
-            map.put("CPUPerUsed", unitData[8]);
-            map.put("MEMPerUsed", unitData[9]);
-            map.put("TIMETill", unitData[10]);
-            map.put("CMD", unitData[11]);
-            list.add(map);
-        }
-        return list;
-    }
 }
