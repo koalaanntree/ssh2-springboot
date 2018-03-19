@@ -4,6 +4,7 @@ import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
 import com.sam.ssh2springboot.dataobject.TopResult;
+import com.sam.ssh2springboot.properties.MonitorProperties;
 import com.sam.ssh2springboot.util.MonitorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -31,6 +32,9 @@ public class Ssh2SpringbootApplication {
     @Autowired
     Connection connection;
 
+    @Autowired
+    MonitorProperties monitorProperties;
+
     @PostMapping
     public List<TopResult> ssh(@RequestParam("query") String cmd) throws Exception {
         //声明session
@@ -50,7 +54,7 @@ public class Ssh2SpringbootApplication {
             List<Map<String, String>> topResultMapList = MonitorUtil.getTopResult(result);
             for (Map<String, String> topResultMap : topResultMapList) {
                 TopResult topResult = new TopResult();
-                topResult.setHostIP("10.42.240.81");
+                topResult.setHostIP(monitorProperties.getHost().getJava());
                 topResult.setProcessId(topResultMap.get("PID"));
                 topResult.setProcessName(topResultMap.get("CMD"));
                 topResult.setMemPercent(topResultMap.get("MEMPerUsed"));

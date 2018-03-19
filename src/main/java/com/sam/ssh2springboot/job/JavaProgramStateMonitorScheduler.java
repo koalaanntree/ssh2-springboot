@@ -23,8 +23,8 @@ import java.util.Map;
  * @Date: Created in 下午1:58 2018/3/19
  * @Description:
  */
-@Configuration
-@EnableScheduling
+//@Configuration
+//@EnableScheduling
 @Slf4j
 public class JavaProgramStateMonitorScheduler {
 
