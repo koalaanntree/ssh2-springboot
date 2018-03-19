@@ -8,7 +8,7 @@ import lombok.Data;
  * @Description:
  */
 @Data
-public class TopCMD {
+public class TopResult {
     /**
      * 进程号
      */

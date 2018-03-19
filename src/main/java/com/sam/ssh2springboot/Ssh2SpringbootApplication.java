@@ -3,6 +3,7 @@ package com.sam.ssh2springboot;
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
+import com.sam.ssh2springboot.dataobject.TopResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,11 +31,12 @@ public class Ssh2SpringbootApplication {
     Connection connection;
 
     @PostMapping
-    public String ssh(@RequestParam("query") String cmd) throws Exception {
+    public List<TopResult> ssh(@RequestParam("query") String cmd) throws Exception {
         //声明session
         Session session = null;
         //声明返回结果
         String result;
+        List<TopResult> topResultList = new ArrayList<>();
         try {
             //通过connection拿到session
             session = connection.openSession();
@@ -44,12 +46,23 @@ public class Ssh2SpringbootApplication {
             InputStream is = session.getStdout();
             //解析返回结果
             result = parseResult(is, "UTF-8");
+            List<Map<String, String>> topResultMapList = getTopResult(result);
+            for (Map<String, String> topResultMap : topResultMapList) {
+                TopResult topResult = new TopResult();
+                topResult.setHostIP("10.42.240.81");
+                topResult.setProcessId(topResultMap.get("PID"));
+                topResult.setProcessName(topResultMap.get("CMD"));
+                topResult.setMemPercent(topResultMap.get("MEMPerUsed"));
+                topResult.setCpuPercent(topResultMap.get("CPUPerUsed"));
+                topResult.setProcessState(topResultMap.get("S"));
+                topResultList.add(topResult);
+            }
         } finally {
             if (session != null) {
                 session.close();
             }
         }
-        return result;
+        return topResultList;
     }
 
 
