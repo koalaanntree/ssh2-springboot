@@ -2,13 +2,25 @@ package com.sam.ssh2springboot.dataobject;
 
 import lombok.Data;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @Author: huangxin
  * @Date: Created in 上午10:42 2018/3/19
  * @Description:
  */
 @Data
+@Entity
+@Table(name = "alarm_info")
 public class TopResult {
+    /**
+     * 数据表id
+     */
+    @Id
+    private String alarmId;
     /**
      * 进程号
      */
@@ -33,5 +45,6 @@ public class TopResult {
     /**
      * 主机地址
      */
+    @Column(name = "host_ip")
     private String hostIP;
 }
