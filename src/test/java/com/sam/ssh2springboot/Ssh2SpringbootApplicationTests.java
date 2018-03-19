@@ -36,9 +36,9 @@ public class Ssh2SpringbootApplicationTests {
 	@Test
 	public void monitorTest() throws Exception {
 		String result = mockMvc.perform(post("/monitor")
-//				.param("query", "top -bn1|grep -w java")
-				.param("query", "ifconfig")
-				.contentType(MediaType.APPLICATION_JSON_UTF8))
+				.param("query", "top -bn1|grep -w java")
+//				.param("query", "ifconfig")
+				.contentType(MediaType.MULTIPART_FORM_DATA))
 				.andExpect(status().isOk())
 				.andReturn().getResponse().getContentAsString();
 		log.info(result);
