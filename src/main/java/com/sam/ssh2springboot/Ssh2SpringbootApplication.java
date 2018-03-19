@@ -6,6 +6,7 @@ import ch.ethz.ssh2.StreamGobbler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,11 @@ public class Ssh2SpringbootApplication {
 
     @Autowired
     Connection connection;
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "hello spring boot";
+    }
 
     @PostMapping
     public String ssh(@RequestParam("query") String cmd) throws Exception {
