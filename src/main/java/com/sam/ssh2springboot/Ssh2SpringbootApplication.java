@@ -36,6 +36,7 @@ public class Ssh2SpringbootApplication {
     }
 
     @PostMapping
+    //记得要测试！记得要测试！记得要测试！
     public String ssh(@RequestParam("query") String cmd) throws Exception {
         //声明session
         Session session = null;
