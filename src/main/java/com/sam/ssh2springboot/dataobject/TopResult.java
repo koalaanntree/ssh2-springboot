@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * @Author: huangxin
@@ -15,7 +16,8 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "alarm_info")
-public class TopResult {
+public class TopResult implements Serializable{
+    private static final long serialVersionUID = -5437832499203437305L;
     /**
      * 数据表id
      */

@@ -4,6 +4,7 @@ import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
 import com.sam.ssh2springboot.dataobject.TopResult;
 import com.sam.ssh2springboot.properties.MonitorProperties;
+import com.sam.ssh2springboot.rabbit.sender.MQSender;
 import com.sam.ssh2springboot.repository.TopResultRepository;
 import com.sam.ssh2springboot.util.DataFormatUtil;
 import com.sam.ssh2springboot.util.MonitorUtil;
@@ -36,6 +37,9 @@ public class JavaProgramStateMonitorScheduler {
     @Autowired
     MonitorProperties monitorProperties;
 
+    @Autowired
+    MQSender mqSender;
+
     @Scheduled(cron = "0/15 * * * * *")
     public void scanJavaState() throws Exception {
         log.info("java scheduler started");
@@ -56,7 +60,7 @@ public class JavaProgramStateMonitorScheduler {
             for (Map<String, String> topResultMap : topResultMapList) {
                 if (Double.parseDouble(topResultMap.get("MEMPerUsed")) > 5) {
                     TopResult topResult = DataFormatUtil.formatTopResult(topResultMap, monitorProperties.getHost().getJava());
-                    topResultRepository.save(topResult);
+                    mqSender.sendMonitorTopMessage(topResult);
                 }
             }
         } finally {
